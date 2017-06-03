@@ -8,16 +8,21 @@ function splitArrayProperty(str) {
 function extractPropertyNames(path) {
   const brackets = ['[', ']'];
   
-  const steps = path.split('.').reduce((accum, item, index) => {
-    if(item.includes('[')) {
-      accum.push(...splitArrayProperty(item));
-    } else {
-      accum.push(item);
-    }
+  const steps = path
+    .replace(/'/g, '')
+    .replace(/"/g, '')
+    .split('.')
+    // .filter(char => !["'", '"'].includes(char))
+    .reduce((accum, item, index) => {
+      if(item.includes('[')) {
+        accum.push(...splitArrayProperty(item));
+      } else {
+        accum.push(item);
+      }
 
-    return accum;
-  }, []);
-  
+      return accum;
+    }, []);
+    
   steps.shift();
   return steps;
 }
@@ -70,6 +75,6 @@ const obj = {
   },
 };
 
-const propPath = `obj.a.b.c[0].d.e[1].f`;
+const propPath = `obj.a.b.c['0'].d.e[1].f`;
 const prop = obj.extractProperty(propPath);
 console.log(prop);
