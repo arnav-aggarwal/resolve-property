@@ -1,25 +1,20 @@
-function hasOneOf(str, testChars) {
-  for(let i = 0; i < testChars.length; i++) {
-    if(str.includes(testChars[i])) {
-      return true;
-    }
-  }
-  
-  return false;
+function splitArrayProperty(str) {
+  const splitStr = str.split('[');
+  const firstProp = splitStr[0];
+  const secondProp = splitStr[1].slice(0, -1);
+  return [firstProp, secondProp];
 }
 
 function extractPropertyNames(path) {
   const brackets = ['[', ']'];
   
-  const steps = path.split('.').reduce((accum, item) => {
-    if(!hasOneOf(item, brackets)) {
-      accum.push(item);
+  const steps = path.split('.').reduce((accum, item, index) => {
+    if(item.includes('[')) {
+      accum.push(...splitArrayProperty(item));
     } else {
-      const splitStr = item.split('[');
-      const firstProp = splitStr[0];
-      const secondProp = splitStr[1].slice(0, -1);
-      accum.push(firstProp, secondProp);
+      accum.push(item);
     }
+
     return accum;
   }, []);
   
@@ -34,6 +29,10 @@ function extractProperty(path) {
   for(let i = 0; i < properties.length; i++) {
     const thisProperty = properties[i];
     
+    if(typeof currentStage !== 'object') {
+      throw new Error(`Attempting to access property ${thisProperty} on a ${typeof currentStage}: "${currentStage}"`);
+    }
+
     if(!currentStage.hasOwnProperty(thisProperty)) {
       const objectProgress = '<root object>.' + properties.slice(0, i).join('.');
       
