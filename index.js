@@ -1,21 +1,13 @@
-function splitArrayProperty(str) {
-  const splitStr = str.split('[');
-  const firstProp = splitStr[0];
-  const secondProp = splitStr[1].slice(0, -1);
-  return [firstProp, secondProp];
-}
-
 function extractPropertyNames(path) {
   const brackets = ['[', ']'];
   
   const steps = path
-    .replace(/'/g, '')
-    .replace(/"/g, '')
+    .replace(/('|")/g, '')
     .split('.')
-    // .filter(char => !["'", '"'].includes(char))
     .reduce((accum, item, index) => {
       if(item.includes('[')) {
-        accum.push(...splitArrayProperty(item));
+        const [_, a, b] = item.match(/(\w+(?=\[))\[(\d+)\]/);
+        accum.push(a, b);
       } else {
         accum.push(item);
       }
@@ -27,9 +19,9 @@ function extractPropertyNames(path) {
   return steps;
 }
 
-function extractProperty(path) {
+function extractProperty(obj, path) {
   const properties = extractPropertyNames(path);
-  let currentStage = this;
+  let currentStage = obj;
 
   for(let i = 0; i < properties.length; i++) {
     const thisProperty = properties[i];
@@ -54,7 +46,7 @@ function extractProperty(path) {
   return currentStage;
 }
 
-Object.prototype.extractProperty = extractProperty;
+Object.extractProperty = extractProperty;
 
 const obj = {
   a: {
@@ -76,5 +68,5 @@ const obj = {
 };
 
 const propPath = `obj.a.b.c['0'].d.e[1].f`;
-const prop = obj.extractProperty(propPath);
+const prop = Object.extractProperty(obj, propPath);
 console.log(prop);
