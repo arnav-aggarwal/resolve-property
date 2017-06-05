@@ -1,5 +1,5 @@
 function extractPropertyNames(path) {
-  return path.match(/(\w+(?=\[|\.|$))|("|')(.+?)\2|\[\d+\]/g)
+  return path.match(/([\w$]+(?=\[|\.|$))|("|')(.+?)\2|\[\d+\]/g)
     .slice(1)
     .map(str => ['"', "'", '['].includes(str[0]) ? str.slice(1, -1) : str);
 }
