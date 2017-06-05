@@ -51,26 +51,3 @@ Object.defineProperty(Object, 'extractProperty', {
   writable: false,
   value: extractProperty,
 });
-
-// const obj = {
-//   a: {
-//     b: {
-//       c: [
-//         {
-//           d: {
-//             e: [
-//               '_',
-//               {
-//                 f: 'Hello!',
-//               },
-//             ],
-//           },
-//         },
-//       ],
-//     },
-//   },
-// };
-
-// const propPath = `obj.a.b.c['0'].d.e[1].f`;
-// const prop = Object.extractProperty(obj, propPath);
-// console.log(prop);
