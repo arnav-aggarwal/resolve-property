@@ -1,18 +1,19 @@
-function extractPropertyNames(path) {  
-  return path
-    .replace(/('|")/g, '')
-    .split('.')
-    .reduce((accum, item) => {
-      if(item.includes('[')) {
-        const [_, a, __, b] = item.match(/(\w+(?=\[))\[("|'?)(\w+)\2\]/);
-        accum.push(a, b);
-      } else {
-        accum.push(item);
-      }
+function extractPropertyNames(path) {
+  return path.match(/\w+/).slice(1);
+  // return path
+  //   .replace(/('|")/g, '')
+  //   .split('.')
+  //   .reduce((accum, item) => {
+  //     if(item.includes('[')) {
+  //       const [_, a, __, b] = item.match(/(\w+(?=\[))\[("|'?)(\w+)\2\]/);
+  //       accum.push(a, b);
+  //     } else {
+  //       accum.push(item);
+  //     }
 
-      return accum;
-    }, [])
-    .slice(1);
+  //     return accum;
+  //   }, [])
+  //   .slice(1);
 }
 
 function extractProperty(obj, path) {
