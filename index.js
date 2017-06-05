@@ -1,6 +1,4 @@
-function extractPropertyNames(path) {
-  const brackets = ['[', ']'];
-  
+function extractPropertyNames(path) {  
   const steps = path
     .replace(/('|")/g, '')
     .split('.')
