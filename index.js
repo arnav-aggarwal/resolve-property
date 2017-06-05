@@ -1,5 +1,5 @@
 function extractPropertyNames(path) {  
-  const steps = path
+  return path
     .replace(/('|")/g, '')
     .split('.')
     .reduce((accum, item) => {
@@ -11,10 +11,8 @@ function extractPropertyNames(path) {
       }
 
       return accum;
-    }, []);
-    
-  steps.shift();
-  return steps;
+    }, [])
+    .slice(1);
 }
 
 function extractProperty(obj, path) {
