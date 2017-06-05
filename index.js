@@ -27,7 +27,7 @@ function extractProperty(obj, path) {
     const thisProperty = properties[i];
     
     if(typeof currentStage !== 'object') {
-      throw new Error(`Attempting to access property ${thisProperty} on a ${typeof currentStage}: "${currentStage}"`);
+      throw new Error(`Attempting to access property "${thisProperty}" on a ${typeof currentStage}: "${currentStage}"`);
     }
 
     if(!currentStage.hasOwnProperty(thisProperty)) {
@@ -52,25 +52,25 @@ Object.defineProperty(Object, 'extractProperty', {
   value: extractProperty,
 });
 
-const obj = {
-  a: {
-    b: {
-      c: [
-        {
-          d: {
-            e: [
-              '_',
-              {
-                f: 'Hello!',
-              },
-            ],
-          },
-        },
-      ],
-    },
-  },
-};
+// const obj = {
+//   a: {
+//     b: {
+//       c: [
+//         {
+//           d: {
+//             e: [
+//               '_',
+//               {
+//                 f: 'Hello!',
+//               },
+//             ],
+//           },
+//         },
+//       ],
+//     },
+//   },
+// };
 
-const propPath = `obj.a.b.c['0'].d.e[1].f`;
-const prop = Object.extractProperty(obj, propPath);
-console.log(prop);
+// const propPath = `obj.a.b.c['0'].d.e[1].f`;
+// const prop = Object.extractProperty(obj, propPath);
+// console.log(prop);
