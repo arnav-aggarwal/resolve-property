@@ -4,7 +4,7 @@ function extractPropertyNames(path) {
   const steps = path
     .replace(/('|")/g, '')
     .split('.')
-    .reduce((accum, item, index) => {
+    .reduce((accum, item) => {
       if(item.includes('[')) {
         const [_, a, __, b] = item.match(/(\w+(?=\[))\[("|'?)(\w+)\2\]/);
         accum.push(a, b);
@@ -46,7 +46,11 @@ function extractProperty(obj, path) {
   return currentStage;
 }
 
-Object.extractProperty = extractProperty;
+Object.defineProperty(Object, 'extractProperty', {
+  configurable: false,
+  writable: false,
+  value: extractProperty,
+});
 
 const obj = {
   a: {
