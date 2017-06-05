@@ -1,18 +1,7 @@
-function extractPropertyNames(path) {  
-  return path
-    .replace(/('|")/g, '')
-    .split('.')
-    .reduce((accum, item) => {
-      if(item.includes('[')) {
-        const [_, a, __, b] = item.match(/(\w+(?=\[))\[("|'?)(\w+)\2\]/);
-        accum.push(a, b);
-      } else {
-        accum.push(item);
-      }
-
-      return accum;
-    }, [])
-    .slice(1);
+function extractPropertyNames(path) {
+  return path.match(/([\w$]+(?=\[|\.|$))|("|')(.+?)\2|\[\d+\]/g)
+    .slice(1)
+    .map(str => ['"', "'", '['].includes(str[0]) ? str.slice(1, -1) : str);
 }
 
 function extractProperty(obj, path) {
