@@ -6,7 +6,7 @@ function extractPropertyNames(path) {
     .split('.')
     .reduce((accum, item, index) => {
       if(item.includes('[')) {
-        const [_, a, b] = item.match(/(\w+(?=\[))\[(?:"|')?(\w+)(?:"|')?\]/);
+        const [_, a, __, b] = item.match(/(\w+(?=\[))\[("|'?)(\w+)\2\]/);
         accum.push(a, b);
       } else {
         accum.push(item);
