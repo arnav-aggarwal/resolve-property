@@ -1,7 +1,40 @@
+function removeFirstProperty(path) {
+  const firstDotIndex = path.indexOf('.');
+  const firstBracketIndex = path.indexOf('[');
+  const indices = [firstDotIndex, firstBracketIndex];
+  const sliceIndex  = indices.includes(-1) ? Math.max(...indices) : Math.min(...indices);
+  return path.slice(sliceIndex);
+}
+
+function testPath(path, matches) {
+  let shorterPath = removeFirstProperty(path);
+
+  matches.forEach(match => {
+    const matchIndex = shorterPath.indexOf(match);
+    shorterPath = shorterPath.substring(0, matchIndex) + shorterPath.substring(matchIndex + match.length);
+  });
+
+  const propertiesRemaining = shorterPath.match(/[^.'"[\]]+/);
+  if(propertiesRemaining) {
+    throw new Error(`Invalid object path entered: "${propertiesRemaining[0]}" is either an invalid property name or is used incorrectly.`);
+  }
+}
+
 function extractPropertyNames(path) {
-  return path.match(/([\w$]+(?=\[|\.|$))|("|')(.+?)\2|\[\d+\]/g)
+  // TODO: Allow escaped quote marks in property names
+  // Simpler regex's from previous iterations:
+  // Simpler regex that allows more false positives: /([\w$]+(?=\[|\.|$))|("|')(?:.+?)[^\\]\2|\[\d+\]|\[('|").\3\]/
+  // Allows something like obj.8.32
+  const parseMatch = str => str[0].match(/'|"|\[/) ? str.slice(1, -1) : str;
+  const matches = path.match(/(?:[a-zA-Z_$](?:[\w$]+)?(?=\[|\.|$))|("|')(?:.+?)[^\\]\1|\[\d+\]|\[('|").\2\]/g)
     .slice(1)
-    .map(str => ['"', "'", '['].includes(str[0]) ? str.slice(1, -1) : str);
+    .map(property => parseMatch(parseMatch(property)));
+  
+  console.log(matches)
+
+  testPath(path, matches);
+  
+  return matches;
 }
 
 function extractProperty(obj, path) {
