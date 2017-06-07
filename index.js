@@ -1,33 +1,32 @@
+function removeFirstProperty(path) {
+  const firstDotIndex = path.indexOf('.');
+  const firstBracketIndex = path.indexOf('[');
+  const indices = [firstDotIndex, firstBracketIndex];
+  const sliceIndex  = indices.includes(-1) ? Math.max(...indices) : Math.min(...indices);
+  return path.slice(sliceIndex);
+}
+
 function testPath(path, matches) {
-  let dotIndex = path.indexOf('.');
-  let bracketIndex = path.indexOf('[');
+  let shorterPath = removeFirstProperty(path);
 
-  let sliceIndex;
-  if (dotIndex === -1) {
-    sliceIndex = bracketIndex;
-  } else if (dotIndex === -1) {
-    sliceIndex = bracketIndex;
-  } else {
-    sliceIndex = Math.min(bracketIndex, dotIndex);
-  }
-
-  let shorterPath = path.slice(sliceIndex);
   matches.forEach(match => {
     const matchIndex = shorterPath.indexOf(match);
     shorterPath = shorterPath.substring(0, matchIndex) + shorterPath.substring(matchIndex + match.length);
   });
 
-  if(shorterPath.match(/[^.'"[\]]/)) {
-    throw new Error(`Invalid object path entered: ${shorterPath}`);
+  const propertiesRemaining = shorterPath.match(/[^.'"[\]]+/);
+  if(propertiesRemaining) {
+    throw new Error(`Invalid object path entered: "${propertiesRemaining[0]}" is either an invalid property name or is used incorrectly.`);
   }
 }
 
 function extractPropertyNames(path) {
   // TODO: Allow escaped quote marks in property names
+  // Simpler regex's from previous iterations:
   // Simpler regex that allows more false positives: /([\w$]+(?=\[|\.|$))|("|')(?:.+?)[^\\]\2|\[\d+\]|\[('|").\3\]/
   // Allows something like obj.8.32
   const parseMatch = str => str[0].match(/'|"|\[/) ? str.slice(1, -1) : str;
-  const matches = path.match(/([a-zA-Z_$](?:[\w$]+)?(?=\[|\.|$))|("|')(?:.+?)[^\\]\2|\[\d+\]|\[('|").\3\]/g)
+  const matches = path.match(/(?:[a-zA-Z_$](?:[\w$]+)?(?=\[|\.|$))|("|')(?:.+?)[^\\]\1|\[\d+\]|\[('|").\2\]/g)
     .slice(1)
     .map(property => parseMatch(parseMatch(property)));
   
