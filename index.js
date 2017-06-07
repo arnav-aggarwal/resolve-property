@@ -1,5 +1,8 @@
 function extractPropertyNames(path) {
-  return path.match(/([\w$]+(?=\[|\.|$))|("|')(.+?)\2|\[\d+\]/g)
+  // TODO: Allow escaped quote marks in property names
+  // Simpler regex that allows more false positives: /([\w$]+(?=\[|\.|$))|("|')(.+?)\2|\[\d+\]/
+  // Allows something like obj.8.32
+  return path.match(/([a-zA-Z_$](?:[\w$]+)?(?=\[|\.|$))|("|')(.+?)\2|\[\d+\]/g)
     .slice(1)
     .map(str => ['"', "'", '['].includes(str[0]) ? str.slice(1, -1) : str);
 }
