@@ -322,7 +322,9 @@ module.exports = [
                 "bicycle": "2wheel",
                 "willie": "hungry",
                 "height": "1",
-                "$coyote_$id": "1511111"
+                "$coyote_$id": {
+                  "$": "Hello there!"
+                }
               },
               "activity": "TRAP",
               "state": "active",
@@ -333,6 +335,6 @@ module.exports = [
         }
       }
     },
-    path: `obj["xyzzy_rbody"]['api'].items["0"].params.$coyote_$id`
+    path: `obj["xyzzy_rbody"]['api'].items["0"].params.$coyote_$id['$']`
   }
 ];
