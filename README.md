@@ -44,7 +44,9 @@ console.log(extraction1 === extraction2 === extraction3); // -> true
 
 ### findLongestPath
 
-findLongestPath takes in an object and a property name and returns the longest path found from the root object to that property key in the form of an array. If the property is not found, it returns `undefined`. If multiple paths of the same length are found, it returns the first one.
+`findLongestPath` takes in an object and a property name and returns the longest path found from the root object to that property key in the form of an array.
+The array contains the proeperties that make up the path. If the property is not found, it returns `undefined`.
+If multiple paths of the same length are found, it returns the first one.
 
 ```
 const obj = {
@@ -65,7 +67,6 @@ const obj = {
 };
 
 findLongestPath(obj, 'arr'); // -> ['prop1', 'arr', '0', 'arr']
-
 ```
 
 ### To Do
