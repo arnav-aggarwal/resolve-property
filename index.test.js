@@ -1,4 +1,4 @@
-test('object properties are extracted correctly', () => {
+test('Object properties are extracted correctly', () => {
     const extractProperty = require('./extract-property');
     const extractPropertyTests = require('./extract-property-tests');
 
@@ -7,7 +7,7 @@ test('object properties are extracted correctly', () => {
     });
 });
 
-test('object paths are generated correctly', () => {
+test('Object paths are generated correctly', () => {
     const findLongestPath = require('./find-longest-path');
     const findLongestPathTests = require('./find-longest-path-tests');
     
@@ -16,10 +16,10 @@ test('object paths are generated correctly', () => {
     });
 });
 
-test('all items exported by index.js are correct', () => {
+test('All items exported by index.js are correct', () => {
     const findLongestPath = require('./find-longest-path');
     const extractProperty = require('./extract-property');
-    
+
     const {
         extractProperty: extractProperty_index,
         findLongestPath: findLongestPath_index,
