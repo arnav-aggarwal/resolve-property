@@ -45,4 +45,3 @@ console.log(extraction1 === extraction2 === extraction3); // -> true
 ### To Do
 
 - Install eslint
-- Add github CI tests
