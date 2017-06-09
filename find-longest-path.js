@@ -20,7 +20,7 @@ function findLongestPath(obj, property) {
 
     if (allPaths.length === 0) {
         return [];
-    };
+    }
 
     if (allPaths.length === 1) {
         return allPaths[0];
