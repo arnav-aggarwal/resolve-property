@@ -1,3 +1,4 @@
+// Recursively generate every possible path for the object
 function findAllPaths(obj, property, stringArr = []) {
     const allPaths = [];
 

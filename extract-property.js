@@ -1,3 +1,4 @@
+// Strip off the first property: obj[abc].def -> [abc].def
 function removeFirstProperty(path) {
     const firstDotIndex = path.indexOf('.');
     const firstBracketIndex = path.indexOf('[');
@@ -16,7 +17,7 @@ function testPath(path, matches) {
 
     const propertiesRemaining = shorterPath.match(/[^.'"[\]]+/);
     if (propertiesRemaining) {
-        throw new Error(`Invalid object path entered: "${propertiesRemaining[0]}" is either an invalid property name or is used incorrectly.`);
+        throw new Error(`Invalid object path entered: "${path}" contains an invalid property name.`);
     }
 }
 
@@ -32,8 +33,8 @@ function extractPropertyNames(path) {
 
 function extractProperty(obj, path) {
     const properties = extractPropertyNames(path);
-    let currentStage = obj;
     const failureObj = { property: undefined };
+    let currentStage = obj;
 
     for (let i = 0; i < properties.length; i++) {
         const thisProperty = properties[i];
