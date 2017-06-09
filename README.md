@@ -42,6 +42,34 @@ console.log(extraction1); // -> 'Hello'!
 console.log(extraction1 === extraction2 === extraction3); // -> true
 ```
 
+### findLongestPath
+
+findLongestPath takes in an object and a property name and returns the longest path found from the root object to that property key. If the property is not found, it returns `undefined`. If multiple paths of the same length are found, it returns the first one.
+
+Properties are separated by dots. Even an array index will use a dot, even though in JS, that would be incorrect.
+
+```
+const obj = {
+    prop1: {
+        arr: [
+            {
+                arr: []
+            }, {
+                arr: ['Hello!']
+            }
+        ]
+    },
+    prop2: {
+        objProp: {
+            arr: ['Hi!']
+        }
+    }
+};
+
+findLongestPath(obj, 'arr'); // -> prop1.arr.0
+
+```
+
 ### To Do
 
 - Install eslint

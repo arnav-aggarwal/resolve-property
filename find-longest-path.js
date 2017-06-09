@@ -1,5 +1,6 @@
 function findAllPaths(obj, property, startString = '') {
     const pathStrings = [];
+
     Object.keys(obj).forEach(key => {
         if(key === property) {
             pathStrings.push(startString + key);
@@ -19,8 +20,13 @@ function countDots(str) {
 }
 
 function findLongestPath(obj, property) {
-    return findAllPaths(obj, property)
-        .filter(str => str.endsWith(property))
+    const allPaths = findAllPaths(obj, property);
+
+    if(allPaths.length <= 1) {
+        return allPaths[0];
+    }
+
+    return allPaths.filter(str => str.endsWith(property))
         .reduce((longest, next) => countDots(next) > countDots(longest) ? next : longest, '');
 }
 
