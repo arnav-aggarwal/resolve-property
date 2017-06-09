@@ -2,7 +2,17 @@
 
 ### extractProperty
 
-`extractProperty` takes in a string that represents the object's path to the property requested.
+`extractProperty` takes in a string that represents the object's path to the property requested and returns an object.
+If the property was found, the object looks like { property: 'foo' }.
+
+If not found, the return object looks like
+
+```
+{
+    property: undefined,
+    error: 'descriptive error'
+}
+```
 
 ```
 const { extractProperty } = require('resolve-property');

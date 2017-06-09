@@ -3,7 +3,7 @@ test('Object properties are extracted correctly', () => {
     const extractPropertyTests = require('./extract-property-tests');
 
     extractPropertyTests.forEach(({ obj, paths, property }) => {
-        const propertiesExtracted = paths.map(thisPath => extractProperty(obj, thisPath));
+        const propertiesExtracted = paths.map(thisPath => extractProperty(obj, thisPath).property);
 
         if(propertiesExtracted.length > 1) {
             let areEqual = true;
@@ -21,7 +21,6 @@ test('Object properties are extracted correctly', () => {
             expect(areEqual).toBe(true);
         }
 
-        console.log(property)
         expect(propertiesExtracted[0]).toBe(property);
     });
 });
