@@ -32,6 +32,6 @@ function findLongestPath(obj, property) {
     .reduce((longest, next) => longest.length >= next.length ? longest : next, '');
 }
 
-console.log(findLongestPath(obj, 'd'));
+// console.log(findLongestPath(obj, 'd'));
 
 module.exports = findLongestPath;
