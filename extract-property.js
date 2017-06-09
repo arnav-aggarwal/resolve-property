@@ -27,35 +27,38 @@ function extractPropertyNames(path) {
         .map(property => parseMatch(parseMatch(property)));
 
     testPath(path, matches);
-
     return matches;
 }
 
 function extractProperty(obj, path) {
     const properties = extractPropertyNames(path);
     let currentStage = obj;
+    const failureObj = { property: undefined };
 
     for (let i = 0; i < properties.length; i++) {
         const thisProperty = properties[i];
 
         if (typeof currentStage !== 'object') {
-            throw new Error(`Attempting to access property "${thisProperty}" on a ${typeof currentStage}: "${currentStage}"`);
+            failureObj.error = `Attempting to access property "${thisProperty}" on a ${typeof currentStage}: "${currentStage}"`;
+            return failureObj;
         }
 
         if (!currentStage.hasOwnProperty(thisProperty)) {
             const objectProgress = '<root object>.' + properties.slice(0, i).join('.');
 
             if (Array.isArray(currentStage)) {
-                throw new Error(`Attempting to access nonexistent index ${thisProperty} in array ${objectProgress}`);
+                failureObj.error = `Attempting to access nonexistent index ${thisProperty} in array ${objectProgress}`;
+                return failureObj;
             }
 
-            throw new Error(`Attempting to access undeclared property "${thisProperty}" on object ${objectProgress}`);
+            failureObj.error = `Attempting to access undeclared property "${thisProperty}" on object ${objectProgress}`;
+            return failureObj;
         }
 
         currentStage = currentStage[thisProperty];
     }
 
-    return currentStage;
+    return { property: currentStage };
 }
 
 module.exports = extractProperty;
