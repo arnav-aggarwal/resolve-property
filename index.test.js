@@ -12,7 +12,6 @@ test('object paths are generated correctly', () => {
     const findLongestPathTests = require('./find-longest-path-tests');
     
     findLongestPathTests.forEach(({ obj, propertyToFind, path }) => {
-        console.log(obj, propertyToFind, path);
         expect(findLongestPath(obj, propertyToFind)).toBe(path)
     });
 });
