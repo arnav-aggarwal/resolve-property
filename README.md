@@ -3,5 +3,4 @@
 ### To Do
 
 - Install eslint
-- Add testing
-- Add github tests
+- Add github CI tests
