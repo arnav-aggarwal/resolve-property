@@ -1,5 +1,26 @@
 module.exports = [
     {
+        obj: {},
+        propertyToFind: 'abc',
+        path: []
+    },
+    {
+        obj: { a: [ { b: ['def'] } ] },
+        propertyToFind: 'abc',
+        path: []
+    },
+    {
+        obj: { a: [ { b: ['def'] } ] },
+        propertyToFind: 'b',
+        path: ['a', '0', 'b']
+    },
+    {
+        obj: [
+            [ [ { a: 'abc' } ] ] ],
+        propertyToFind: 'a',
+        path: ['0', '0', '0', 'a']
+    },
+    {
         obj: {
             a: {
                 b: {

@@ -1,5 +1,13 @@
 module.exports = [
     {
+        obj: { a: 'Hello!' },
+        paths: [
+            'obj.a',
+            `obj['a']`,
+        ],
+        property: 'Hello!',
+    },
+    {
         obj: {
             a: {
                 b: {
@@ -23,23 +31,47 @@ module.exports = [
     },
     {
         obj: [
-            '{{repeat(5, 7)}}',
+            [],
             {
                 tags: [
-                    '{{repeat(7)}}',
-                    '{{lorem(1, "words")}}'
+                    'abc',
+                    'def',
                 ],
                 friends: [
-                    '{{repeat(3)}}',
+                    '01',
                     {
-                        id: '{{index()}}',
-                        name: '{{firstName()}} {{surname()}}'
+                        id: '1234',
+                        name: 'Smith'
                     }
                 ],
             },
         ],
         paths: [`test1[1].friends[1].name`],
-        property: '{{firstName()}} {{surname()}}',
+        property: 'Smith',
+    },
+    {
+        obj: {
+            prop1: {
+                arr: [
+                    {
+                        arr: []
+                    }, {
+                        arr: ['Hello!']
+                    }
+                ]
+            },
+            prop2: {
+                objProp: {
+                    arr: ['Hi!']
+                }
+            }
+        },
+        paths: [
+            'obj.prop1.arr[1].arr[0]',
+            "obj['prop1'].arr[1].arr[0]",
+            `obj['prop1']['arr'][1]['arr'][0]`,
+        ],
+        property: 'Hello!'
     },
     {
         obj: [
@@ -315,29 +347,5 @@ module.exports = [
         },
         paths: [`obj["xyzzy_rbody"]['api'].items["0"].params.$coyote_$id['$']`],
         property: 'Hello there!',
-    },
-    {
-        obj: {
-            prop1: {
-                arr: [
-                    {
-                        arr: []
-                    }, {
-                        arr: ['Hello!']
-                    }
-                ]
-            },
-            prop2: {
-                objProp: {
-                    arr: ['Hi!']
-                }
-            }
-        },
-        paths: [
-            'obj.prop1.arr[1].arr[0]',
-            "obj['prop1'].arr[1].arr[0]",
-            `obj['prop1']['arr'][1]['arr'][0]`,
-        ],
-        property: 'Hello!'
     },
 ];

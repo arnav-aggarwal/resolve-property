@@ -13,7 +13,7 @@ If not found, the return object looks like
     error: 'descriptive error'
 }
 ```
-
+For a better understanding of the inputs and outputs, see [extract-property-tests.js](https://github.com/arnav-aggarwal/resolve-property/blob/master/extract-property-tests.js).
 ```
 const { extractProperty } = require('resolve-property');
 
@@ -48,6 +48,7 @@ console.log(extraction1 === extraction2 === extraction3); // -> true
 The array contains the proeperties that make up the path. If the property is not found, it returns `undefined`.
 If multiple paths of the same length are found, it returns the first one.
 
+For a better understanding of the inputs and outputs, see [find-longest-path-tests.js](https://github.com/arnav-aggarwal/resolve-property/blob/master/find-longest-path-tests.js).
 ```
 const obj = {
     prop1: {
