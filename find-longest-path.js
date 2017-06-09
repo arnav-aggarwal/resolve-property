@@ -1,27 +1,33 @@
-function findAllPaths(obj, property, startString = '') {
-    const pathStrings = [];
+// Recursively generate every possible path for the object
+function findAllPaths(obj, property, stringArr = []) {
+    const allPaths = [];
+
     Object.keys(obj).forEach(key => {
         if(key === property) {
-            pathStrings.push(startString + key);
+            allPaths.push([...stringArr, key]);
         }
 
         if (typeof obj[key] === 'object') {
-            pathStrings.push(...findAllPaths(obj[key], property, startString + key + '.'));
+            allPaths.push(...findAllPaths(obj[key], property, [...stringArr, key]));
         }
     });
 
-    return pathStrings;
-}
-
-function countDots(str) {
-    const match = str.match(/\./g);
-    return match && match.length || 0;
+    return allPaths;
 }
 
 function findLongestPath(obj, property) {
-    return findAllPaths(obj, property)
-        .filter(str => str.endsWith(property))
-        .reduce((longest, next) => countDots(next) > countDots(longest) ? next : longest, '');
+    const allPaths = findAllPaths(obj, property);
+
+    if (allPaths.length === 0) {
+        return [];
+    };
+
+    if (allPaths.length === 1) {
+        return allPaths[0];
+    }
+
+    return allPaths.filter(path => path[path.length - 1] === property)
+        .reduce((longest, next) => next.length > longest.length ? next : longest, '');
 }
 
 module.exports = findLongestPath;

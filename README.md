@@ -13,7 +13,7 @@ If not found, the return object looks like
     error: 'descriptive error'
 }
 ```
-
+For a better understanding of the inputs and outputs, see [extract-property-tests.js](https://github.com/arnav-aggarwal/resolve-property/blob/master/extract-property-tests.js).
 ```
 const { extractProperty } = require('resolve-property');
 
@@ -40,6 +40,34 @@ const extraction3 = extractProperty(obj, `obj['prop1']['arr'][1]['arr'][0]`);
 
 console.log(extraction1); // -> 'Hello'!
 console.log(extraction1 === extraction2 === extraction3); // -> true
+```
+
+### findLongestPath
+
+`findLongestPath` takes in an object and a property name and returns the longest path found from the root object to that property key in the form of an array.
+The array contains the proeperties that make up the path. If the property is not found, it returns `undefined`.
+If multiple paths of the same length are found, it returns the first one.
+
+For a better understanding of the inputs and outputs, see [find-longest-path-tests.js](https://github.com/arnav-aggarwal/resolve-property/blob/master/find-longest-path-tests.js).
+```
+const obj = {
+    prop1: {
+        arr: [
+            {
+                arr: []
+            }, {
+                arr: ['Hello!']
+            }
+        ]
+    },
+    prop2: {
+        objProp: {
+            arr: ['Hi!']
+        }
+    }
+};
+
+findLongestPath(obj, 'arr'); // -> ['prop1', 'arr', '0', 'arr']
 ```
 
 ### To Do
