@@ -30,7 +30,7 @@ function extractPropertyNames(path) {
     .slice(1)
     .map(property => parseMatch(parseMatch(property)));
   
-  console.log(matches)
+  // console.log(matches)
 
   testPath(path, matches);
   

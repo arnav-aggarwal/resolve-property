@@ -1,4 +1,4 @@
-var obj = {
+const obj = {
     a:{
         b:"value",
         c:{
@@ -8,10 +8,11 @@ var obj = {
 };
 
 function findAllPaths(obj, property, startString = '') {
-  var pathStrings = [];
+  const pathStrings = [];
   Object.keys(obj).forEach(key => {
-    if(typeof obj[key] === 'object') {
-      pathStrings.push(...findAllPaths(obj[key], property, startString + key + '.'));
+    const value = obj[key];
+    if(typeof value === 'object') {
+      pathStrings.push(...findAllPaths(value, property, startString + key + '.'));
       return;
     }
     
@@ -21,10 +22,16 @@ function findAllPaths(obj, property, startString = '') {
   return pathStrings;
 }
 
-module.exports = function findLongestPath(obj, property) {
+function reverseStr(str) {
+  return str.split('').reverse().join('');
+}
+
+function findLongestPath(obj, property) {
   return findAllPaths(obj, property)
     .filter(str => str.split('').reverse().join('').slice(0, property.length) === property.split('').reverse().join(''))
     .reduce((longest, next) => longest.length >= next.length ? longest : next, '');
 }
 
-console.log(findLongestPath(obj, 'd'));
+// console.log(findLongestPath(obj, 'd'));
+
+module.exports = findLongestPath;
