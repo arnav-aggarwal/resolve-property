@@ -13,10 +13,15 @@ function findAllPaths(obj, property, startString = '') {
     return pathStrings;
 }
 
+function countDots(str) {
+    const match = str.match(/\./g);
+    return match && match.length || 0;
+}
+
 function findLongestPath(obj, property) {
     return findAllPaths(obj, property)
         .filter(str => str.endsWith(property))
-        .reduce((longest, next) => longest.length >= next.length ? longest : next, '');
+        .reduce((longest, next) => countDots(next) > countDots(longest) ? next : longest, '');
 }
 
 module.exports = findLongestPath;
