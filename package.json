@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "lint": "eslint *.js",
     "start": "nodemon --inspect tester.js"
   },
   "repository": {
@@ -23,6 +24,8 @@
   },
   "homepage": "https://github.com/arnav-aggarwal/resolve-property#readme",
   "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-plugin-jest": "^20.0.3",
     "jest-cli": "^20.0.4"
   },
   "jest": {
